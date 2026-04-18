@@ -1,23 +1,13 @@
 package commands;
 
-import exceptions.ArgumentExceptionType;
 import exceptions.InvalidCommandArgumentException;
+import exceptions.ArgumentExceptionType;
 import managers.CollectionManager;
 import utility.HistoryParser;
 
-public class PrintDescending extends Command {
-    public PrintDescending(String... parameters) {
+public class Info extends Command {
+    public Info(String... parameters) {
         super(parameters);
-    }
-
-    @Override
-    public String description() {
-        return "вывести элементы коллекции в порядке убывания";
-    }
-
-    @Override
-    public String toString() {
-        return "print_descending";
     }
 
     @Override
@@ -34,10 +24,19 @@ public class PrintDescending extends Command {
     }
 
     @Override
+    public String description() {
+        return this + "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)";
+    }
+
+    @Override
+    public String toString(){
+        return "info";
+    }
+
+    @Override
     public void execute() {
         HistoryParser.addCommand(toString());
-
-        System.out.println("Элементы коллекции в порядке убывания");
-        CollectionManager.printDescending();
+        System.out.println("Информация о коллекции");
+        CollectionManager.info();
     }
 }

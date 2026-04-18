@@ -1,0 +1,20 @@
+package utility.loader;
+
+enum ParserState {
+    ROOT,
+    BANDS,
+    MUSIC_BAND,
+    BAND_ID,
+    BAND_NAME,
+    BAND_DATE_OF_CREATION,
+    COORDINATES,
+    COORDINATE_X,
+    COORDINATE_Y,
+    MUSIC_GENRE,
+    BAND_NUMBER_OF_PARTICIPANTS,
+    BAND_STUDIO,
+    STUDIO_ADDRESS,
+    SERVICE_DATA,
+    NEXT_ID,
+    DATE_INITIALIZATION
+}
