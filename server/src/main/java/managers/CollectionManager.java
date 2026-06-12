@@ -137,14 +137,14 @@ public class CollectionManager {
         }
     }
 
-    public static boolean addIfMinWithDb(MusicBand incoming, int ownerId) {
+    public static MusicBand addIfMinWithDb(MusicBand incoming, int ownerId) {
         synchronized (set) {
             boolean isMin = set.isEmpty() || set.stream().min(java.util.Comparator.naturalOrder())
                     .map(minBand -> incoming.compareTo(minBand) < 0)
                     .orElse(true);
 
             if (!isMin) {
-                return false;
+                return null;
             }
 
             int generatedId = DBManager.getInstance().insertBand(incoming, ownerId).getId();
@@ -165,10 +165,10 @@ public class CollectionManager {
                 }
 
                 set.add(finalBand);
-                return true;
+                return finalBand;
             }
+            return null;
         }
-        return false;
     }
 
     public static long countGreaterThanStudio(String studioAddress) {
@@ -211,20 +211,19 @@ public class CollectionManager {
                 "Количество элементов в коллекции: " + set.size() + "\n";
     }
 
-    public static String showAllElements() {
+    public static List<MusicBand> getAllElements() {
         synchronized (set) {
-            if (set.isEmpty()) return "Коллекция пуста";
-            return set.stream().map(MusicBand::toString).collect(Collectors.joining("\n"));
+            return new ArrayList<>(set);
         }
     }
 
-    public static String printDescendingText() {
+
+    public static List<MusicBand> getDescendingElements() {
         synchronized (set) {
-            if (set.isEmpty()) return "Коллекция пуста";
             return set.stream()
-                    .sorted(Comparator.reverseOrder())
-                    .map(MusicBand::toString)
-                    .collect(Collectors.joining("\n"));
+                    .sorted(java.util.Comparator.reverseOrder())
+                    .collect(Collectors.toList());
         }
     }
+
 }

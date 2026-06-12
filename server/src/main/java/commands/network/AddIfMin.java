@@ -20,10 +20,10 @@ public class AddIfMin extends BaseHandler {
             int ownerId = UserContext.getUserId();
             HistoryParser.addCommandForUser(ownerId, "show");
 
-            boolean added = CollectionManager.addIfMinWithDb(incoming, ownerId);
+            MusicBand added = CollectionManager.addIfMinWithDb(incoming, ownerId);
 
-            if (added) {
-                return ok("Элемент успешно добавлен, так как он является минимальным!");
+            if (added != null) {
+                return CommandResponse.success("Элемент успешно добавлен, так как он является минимальным!", added);
             } else {
                 return ok("Элемент не добавлен: в коллекции уже есть элементы, которые меньше или равны ему.");
             }

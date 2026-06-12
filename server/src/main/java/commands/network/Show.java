@@ -13,7 +13,7 @@ public class Show extends BaseHandler {
         try {
             int ownerId = UserContext.getUserId();
             HistoryParser.addCommandForUser(ownerId, "show");
-            return ok(CollectionManager.showAllElements());
+            return CommandResponse.success("Collection data", CollectionManager.getAllElements());
         } catch (Exception e) {
             return physicalError("Внутренняя ошибка сервера при выполнении show: " + e.getMessage());
         }

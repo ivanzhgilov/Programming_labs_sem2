@@ -13,7 +13,7 @@ public class PrintDescending extends BaseHandler {
         try {
             int ownerId = UserContext.getUserId();
             HistoryParser.addCommandForUser(ownerId, "print_descending");
-            return ok(CollectionManager.printDescendingText());
+            return CommandResponse.success("Bands in descending order", CollectionManager.getDescendingElements());
         } catch (Exception e) {
             return physicalError("Внутренняя ошибка сервера при выполнении print_descending: " + e.getMessage());
         }

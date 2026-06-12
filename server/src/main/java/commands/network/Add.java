@@ -24,7 +24,11 @@ public class Add extends BaseHandler {
             int generatedId = CollectionManager.addWithDb(incoming, ownerId);
 
             if (generatedId > 0) {
-                return ok("Создание MusicBand успешно завершено! Объект сохранен в БД под id: " + generatedId);
+                MusicBand createdBand = CollectionManager.getSet().stream()
+                        .filter(b -> b.getId() == generatedId)
+                        .findFirst()
+                        .orElse(null);
+                return CommandResponse.success("Создание MusicBand успешно завершено! Объект сохранен в БД под id: " + generatedId, createdBand);
             } else {
                 return physicalError("Не удалось сохранить объект в базу данных.");
             }

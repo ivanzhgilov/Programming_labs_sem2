@@ -25,7 +25,7 @@ public class CountGreaterThanStudio extends BaseHandler {
             int ownerId = UserContext.getUserId();
             HistoryParser.addCommandForUser(ownerId, "count_greater_than_studio");
 
-            return ok("Количество элементов с адресным значением студии больше заданного: " + count);
+            return CommandResponse.success("Count of bands with studio address greater than " + studioAddress, count);
 
         } catch (PresentationException e) {
             return presentationError(e.getMessage());

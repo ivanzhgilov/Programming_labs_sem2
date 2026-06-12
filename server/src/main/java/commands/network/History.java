@@ -24,7 +24,7 @@ public class History extends BaseHandler {
                 return ok("Ваша история команд пока пуста.");
             }
 
-            return ok(String.join("\n", lastCommands) + "\n");
+            return CommandResponse.success("User command history", lastCommands);
 
         } catch (SecurityException e) {
             return presentationError("Ошибка безопасности при дешифровании пакета данных: " + e.getMessage());

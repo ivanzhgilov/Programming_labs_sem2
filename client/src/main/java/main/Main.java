@@ -1,10 +1,9 @@
 package main;
 
 import network.UdpClient;
+import managers.NetworkManager;
+import javafx.application.Application;
 
-/**
- * Главная точка входа клиентского приложения.
- */
 public final class Main {
 
     private Main() {
@@ -14,10 +13,20 @@ public final class Main {
         String host = resolveHost(args);
         int port = resolvePort(args);
 
+        String mode = System.getProperty("mode", "gui");
+
+        if ("cli".equalsIgnoreCase(mode)) {
+            runConsoleMode(host, port);
+        } else {
+            runGuiMode(host, port);
+        }
+    }
+
+    private static void runConsoleMode(String host, int port) {
         UdpClient client = null;
         try {
             client = new UdpClient(host, port);
-            System.out.println("Программа загружена!");
+            System.out.println("Программа загружена в консольном режиме!");
 
             new ClientConsole(client).run();
 
@@ -34,6 +43,14 @@ public final class Main {
                 }
             }
         }
+    }
+
+    private static void runGuiMode(String host, int port) {
+        // Инициализируем сетевой менеджер перед запуском JavaFX
+        NetworkManager.getInstance().init(host, port);
+
+        // Запуск JavaFX приложения
+        Application.launch(GuiClientApplication.class);
     }
 
     private static String resolveHost(String[] args) {
